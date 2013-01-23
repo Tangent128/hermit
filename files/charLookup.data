@@ -1,0 +1,12 @@
+# Table of "interesting" unicode characters, with keywords to find them
+# Format is line-based; lines starting with # are comments.
+# other lines start with a UTF-8 character and a space,
+# followed by keywords (keywords must be lowercase).
+
+♥ black heart
+♡ white heart
+♩ music quarter note
+♪ music eighth note
+♫ music double beamed eighth note
+♬ music double beamed sixteenth notes
+
