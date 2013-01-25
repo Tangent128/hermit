@@ -1,0 +1,4 @@
+#FILE charLookup/charLookup.awk
+#FILE charLookup/charLookup.data
+#PATCH tool charLookup
+alias "char=awk -f ~/.hermit/charLookup/charLookup.awk ~/.hermit/charLookup/charLookup.data"
