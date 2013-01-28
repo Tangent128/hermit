@@ -1,0 +1,32 @@
+#SHELL zsh
+#PATCH prompt
+function _tan128_trollsign() {
+	# $1 = symbol, $2 = 256-color code, $3 = exit status code
+	local sign=$1
+
+	if [ $3 != 0 ]; then
+		sign=$3;
+	fi
+
+	local e=$'\e['
+	PROMPT="%3c %{${e}38;5;${2}m%}$sign %{${e}00m%}"
+}
+function precmd() {
+	local s=$?
+	
+	case $((RANDOM % 12)) in
+	0)	_tan128_trollsign ♈ 124 $s;;
+	1)	_tan128_trollsign ♉ 130 $s;;
+	2)	_tan128_trollsign ♊ 142 $s;;
+	3)	_tan128_trollsign ♋ 241 $s;;
+	4)	_tan128_trollsign ♌ 58 $s;;
+	5)	_tan128_trollsign ♍ 29 $s;;
+	6)	_tan128_trollsign ♎ 30 $s;;
+	7)	_tan128_trollsign ♏ 24 $s;;
+	8)	_tan128_trollsign ♐ 18 $s;;
+	9)	_tan128_trollsign ♑ 55 $s;;
+	10)	_tan128_trollsign ♒ 53 $s;;
+	11)	_tan128_trollsign ♓ 89 $s;;
+	esac
+
+}
