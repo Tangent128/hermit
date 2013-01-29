@@ -112,7 +112,7 @@ forPatches() {
 	# metadata | forPatches command args
 	theCommand=$1
 	shift 1
-	while read type index patchtype name shell etc; do
+	while read type shell index patchtype name etc; do
 		if [ "$type" == "patch" ]; then
 			PATCH=$(readPatch $index)
 			PATCH_TYPE=$patchtype
@@ -128,53 +128,19 @@ patchFile() {
 	test $1.new && mv $1.new $1.working
 	awk -f $DIR/hermitManage.awk "patchType=$PATCH_TYPE" "patchName=$PATCH_NAME" \
 	       "patchText=$PATCH" $1.working > $1.new
-}
-
-#likely cruft
-installPatch() {
-	REALFILE=$1
-	TMPFILE=$DIR/$(basename $1)
-	PATCH=$2
-	PATCH_TYPE=$3
-	PATCH_NAME=$4
-	
-	cp $REALFILE $TMPFILE.old
-	
-	
-	
-	cp $TMPFILE.new $REALFILE
-	#echo would add [$PATCH_TYPE $PATCH_NAME] to $REALFILE [tmp $DIR/$FILENAME]
+	#echo patched $1
 }
 
 ###
 ## Main logic
 # 
 
-PATCH_FILE=$DIR/patches/charLookup
+PATCH_FILE=$DIR/patches/prompt-alternia
 
-CharLookup=$DIR/charLookup/charLookup
-CMD="char=awk -f $CharLookup.awk $CharLookup.data"
-PATCH="alias \"$CMD\""
-
-patchIfExist() {
-:
-#	test -f $1 && installPatch $1 "$PATCH" tool char
-}
-
-#patchIfExist ~/.bashrc
-#patchIfExist ~/.zshrc
-
-#forShells backupShellFiles
 metadata | forShellFiles doBackup
 
 metadata | forPatches eval patchFile \$RC_BASE
 
 metadata | forShellFiles doInstall
 
-#forShells sh echo apply sh
-#forShells zsh echo apply zsh
-
-#echo
-
-#forShells sh checkShell
 

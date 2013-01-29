@@ -37,7 +37,7 @@ $1 == "#SHELL" {currentShell = $2}
 # actions
 
 mode==Metadata && $1 == "#PATCH" {
-	print "patch", currentPatch, $2, $3, currentShell
+	print "patch", currentShell, currentPatch, $2, $3
 	next
 }
 mode==Metadata && $1 == "#FILE" {
@@ -46,7 +46,7 @@ mode==Metadata && $1 == "#FILE" {
 }
 
 mode==Patch && $1 in Directives {next}
-mode==Patch && currentPatch == patchNum 
+mode==Patch && currentPatch == patchNum {gsub(/\\/, "\\\\"); print}
 
 END {
 	if(mode==Metadata) {
