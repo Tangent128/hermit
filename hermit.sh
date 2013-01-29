@@ -14,6 +14,7 @@ DIR=~/.hermit
 #
 
 PATCH_FILE=
+MODE=
 
 # set by each checkShell invocation:
 SHELL_NAME=
@@ -124,23 +125,50 @@ forPatches() {
 
 # WIP
 patchFile() {
-	# patchFile filebase type name patch
+	# patchFile filebase
+	removing="0"
+	test "$MODE" == "uninstallPatch" && removing="1"
+	
 	test $1.new && mv $1.new $1.working
 	awk -f $DIR/hermitManage.awk "patchType=$PATCH_TYPE" "patchName=$PATCH_NAME" \
-	       "patchText=$PATCH" $1.working > $1.new
+	       "patchText=$PATCH" "removePatch=$removing" $1.working > $1.new
 	#echo patched $1
 }
 
 ###
 ## Main logic
-# 
+#
 
-PATCH_FILE=$DIR/patches/prompt-alternia
+usage() {
+	echo "Usage: install patch: $0 -S patchName"
+	echo "       uninstall patch: $0 -D patchName"
+}
+usageErr() {
+	echo $*
+	usage
+	exit 1
+}
 
+# determine mode
+FLAG=$1
+
+case $FLAG in
+	-S*) MODE=installPatch ;;
+	-D*) MODE=uninstallPatch ;;
+esac
+
+case $FLAG in *y*) : tbd ; ;; esac
+
+test "$MODE" || usageErr No mode given.
+
+# identify patch file
+test "$2" || usageErr No patch name given.
+PATCH_FILE=$DIR/patches/$2
+test -f $PATCH_FILE || usageErr Could not find specified patch.
+
+# apply actions
 metadata | forShellFiles doBackup
-
-metadata | forPatches eval patchFile \$RC_BASE
-
+metadata | forPatches eval patchFile \$RC_BASE 
 metadata | forShellFiles doInstall
 
 
