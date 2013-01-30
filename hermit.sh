@@ -73,7 +73,7 @@ forShells() {
 	theCommand=$2
 	shift 2
 	
-	if [ $compatShell == "sh" ]; then
+	if [ $compatShell = "sh" ]; then
 		checkShell sh && $theCommand $*
 		checkShell zsh && $theCommand $*
 		checkShell bash && $theCommand $*
@@ -103,7 +103,7 @@ doInstall() {
 forShellFiles() {
 	# metadata | forShellFiles command args
 	while read type shell etc; do
-		if [ "$type" == "shell" ]; then
+		if [ "$type" = "shell" ]; then
 			forShells $shell $1 $*
 		fi
 	done
@@ -114,7 +114,7 @@ forPatches() {
 	theCommand=$1
 	shift 1
 	while read type shell index patchtype name etc; do
-		if [ "$type" == "patch" ]; then
+		if [ "$type" = "patch" ]; then
 			PATCH=$(readPatch $index)
 			PATCH_TYPE=$patchtype
 			PATCH_NAME=$name
@@ -127,7 +127,7 @@ forPatches() {
 patchFile() {
 	# patchFile filebase
 	removing="0"
-	test "$MODE" == "uninstallPatch" && removing="1"
+	test "$MODE" = "uninstallPatch" && removing="1"
 	
 	test $1.new && mv $1.new $1.working
 	awk -f $DIR/hermitManage.awk "patchType=$PATCH_TYPE" "patchName=$PATCH_NAME" \
