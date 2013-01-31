@@ -1,0 +1,21 @@
+#SHELL bash
+#PATCH prompt
+function tan128_noteColor() {
+	if [ $1 = 0 ]; then
+		printf "\e[36m"
+	else
+		printf "\e[31m"
+	fi
+	exit $1
+}
+
+function tan128_printNote() {
+	if [ $1 != 0 ]; then
+		echo $1♪
+	else
+		echo ♫
+	fi
+	exit $1
+}
+
+PS1="\[\e[34m\]\w \[\$(tan128_noteColor \$?)\]\$(tan128_printNote \$?)\[\e[0m\] "

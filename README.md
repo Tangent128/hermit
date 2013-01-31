@@ -28,6 +28,7 @@ Current patches
 --
 * `charLookup`: tool to search for unicode characters by keyword (database is very small right now though)
 * `prompt-alternia`: a Homestuck-troll-themed shell prompt. Only applies to zsh.
+* `prompt-bach`: a simple music-note shell prompt. Only applies to bash, and is mainly included for pun's sake.
 
 Notes
 --
