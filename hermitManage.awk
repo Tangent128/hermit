@@ -64,6 +64,6 @@ END {
 		print SectionCode, "BEGIN Hermit-managed section"
 		patch()
 		print SectionCode, "END Hermit-managed section"
-		print
+		print ""
 	}
 }
