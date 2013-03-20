@@ -1,2 +1,2 @@
 #PATCH alias hermit
-alias hermit='./.hermit/hermit.sh'
+alias hermit='~/.hermit/hermit.sh'
